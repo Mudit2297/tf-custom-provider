@@ -1,6 +1,9 @@
 name: Provider-Test
 on: 
   workflow_dispatch:
+  push:
+    branches:
+      - master
 jobs:
   DefaultExecution:
     name: Provider-Test
