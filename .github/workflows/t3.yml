@@ -1,0 +1,14 @@
+name: Provider-Test
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+jobs:
+  DefaultExecution:
+    name: Provider-Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Script
+        run: |
+          echo "Hello World"

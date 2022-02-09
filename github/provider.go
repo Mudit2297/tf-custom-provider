@@ -24,8 +24,10 @@ func Provider() *schema.Provider {
 				DefaultFunc: schema.EnvDefaultFunc("GHTOKEN", nil),
 			},
 		},
-		ResourcesMap:         map[string]*schema.Resource{},
-		DataSourcesMap:       map[string]*schema.Resource{},
+		ResourcesMap: map[string]*schema.Resource{},
+		DataSourcesMap: map[string]*schema.Resource{
+			"github_workflow": dataSourceGitWorkflow(),
+		},
 		ConfigureContextFunc: providerConfigure,
 	}
 }
