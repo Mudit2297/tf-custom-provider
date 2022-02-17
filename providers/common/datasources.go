@@ -8,7 +8,7 @@ import (
 )
 
 var Data = cpf.CustomResources{
-	DataSourcesMap: []cpf.ResourcMap{
+	DataSourcesMap: []cpf.ResourceMap{
 		//hcp.CoffeeDataSource,
 		git.WorkflowDataSource,
 	},

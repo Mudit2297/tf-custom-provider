@@ -1,58 +1,110 @@
 package cpf
 
-import (
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-)
+import "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-type SchemaMap map[string]*schema.Schema
-
-type ResourcMap map[string]*schema.Resource
-
-type CustomSchema struct {
-	Schemas []SchemaMap
-}
-
-type CustomResources struct {
-	ResourcesMaps  []ResourcMap
-	DataSourcesMap []ResourcMap
-}
-
-type CustomConfigureContextFunc struct {
-	ConfigureContextFunc schema.ConfigureContextFunc
-}
-
-func (c *CustomSchema) Schema() SchemaMap {
-	var schema = make(SchemaMap)
-	for _, v := range c.Schemas {
-		for x, y := range v {
-			if _, ok := schema[x]; !ok {
-				schema[x] = y
-			}
-		}
+func TypeIntComputed() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeInt,
+		Computed: true,
 	}
-	return schema
 }
 
-func (c *CustomResources) Resources() ResourcMap {
-	var resource = make(ResourcMap)
-	for _, v := range c.ResourcesMaps {
-		for x, y := range v {
-			if _, ok := resource[x]; !ok {
-				resource[x] = y
-			}
-		}
+func TypeIntRequired() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeInt,
+		Required: true,
 	}
-	return resource
 }
 
-func (c *CustomResources) DataSources() ResourcMap {
-	var resource = make(ResourcMap)
-	for _, v := range c.DataSourcesMap {
-		for x, y := range v {
-			if _, ok := resource[x]; !ok {
-				resource[x] = y
-			}
-		}
+func TypeIntRequiredForceNew() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeInt,
+		Required: true,
+		ForceNew: true,
 	}
-	return resource
+}
+
+func TypeIntOptional() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeInt,
+		Optional: true,
+	}
+}
+
+func TypeStringComputed() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeString,
+		Computed: true,
+	}
+}
+
+func TypeStringRequired() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeString,
+		Required: true,
+	}
+}
+
+func TypeStringRequiredForceNew() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeString,
+		Required: true,
+		ForceNew: true,
+	}
+}
+
+func TypeStringOptional() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeString,
+		Optional: true,
+	}
+}
+
+func TypeBoolComputed() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeBool,
+		Computed: true,
+	}
+}
+
+func TypeBoolRequired() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeBool,
+		Required: true,
+	}
+}
+
+func TypeBoolRequiredForceNew() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeBool,
+		Required: true,
+		ForceNew: true,
+	}
+}
+
+func TypeNullComputed() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeString,
+		Computed: true,
+	}
+}
+
+func TypeEmptyListComputed() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeList,
+		Computed: true,
+		Elem: &schema.Resource{
+			Schema: map[string]*schema.Schema{},
+		},
+	}
+}
+
+func TypeEmptyListRequired() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeList,
+		Required: true,
+		Elem: &schema.Resource{
+			Schema: map[string]*schema.Schema{},
+		},
+	}
 }

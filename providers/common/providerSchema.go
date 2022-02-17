@@ -1,7 +1,7 @@
 package common
 
 import (
-	gh "cpf/providers/terraform-provider-github"
+	git "cpf/providers/terraform-provider-github"
 	//hcp "cpf/providers/terraform-provider-hashicups"
 
 	"cpf"
@@ -10,6 +10,6 @@ import (
 var PSchema = cpf.CustomSchema{
 	Schemas: []cpf.SchemaMap{
 		//hcp.HashicupsProviderSchema,
-		gh.GitHubProviderSchema,
+		git.GitHubProviderSchema,
 	},
 }

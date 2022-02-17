@@ -2,35 +2,17 @@ package github
 
 import (
 	"context"
+	"cpf"
+	"cpf/providers/client"
 	"fmt"
 	"strconv"
 	"time"
-
-	"cpf/providers/client"
-
-	"cpf"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 var workflow = cpf.SchemaMap{
-	// "total_count": cpf.TypeIntComputed(),
-	// "workflows": &schema.Schema{
-	// 	Type:     schema.TypeList,
-	// 	Computed: true,
-	// 	Elem: &schema.Resource{
-	// 		Schema: cpf.SchemaMap{
-	// 			"id":    cpf.TypeIntComputed(),
-	// 			"name":  cpf.TypeStringComputed(),
-	// 			"path":  cpf.TypeStringComputed(),
-	// 			"state": cpf.TypeStringComputed(),
-	// 			"url":   cpf.TypeStringComputed(),
-	// 			"owner": cpf.TypeStringRequired(),
-	// 			"repo":  cpf.TypeStringRequired(),
-	// 		},
-	// 	},
-	// },
 	"id":                 cpf.TypeIntComputed(),
 	"path":               cpf.TypeStringComputed(),
 	"state":              cpf.TypeStringComputed(),
@@ -40,18 +22,18 @@ var workflow = cpf.SchemaMap{
 	"repo":               cpf.TypeStringRequired(),
 }
 
-var WorkflowDataSource = cpf.ResourcMap{
+var WorkflowDataSource = cpf.ResourceMap{
 	"cpf_git_workflow": dataSourceGitWorkflow(),
 }
 
-var sch = cpf.CustomSchema{
+var dataWorkflow = cpf.CustomSchema{
 	Schemas: []cpf.SchemaMap{workflow},
 }
 
 func dataSourceGitWorkflow() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceGitWorkflowRead,
-		Schema:      sch.Schema(),
+		Schema:      dataWorkflow.Schema(),
 	}
 }
 
@@ -67,7 +49,7 @@ func dataSourceGitWorkflowRead(ctx context.Context, d *schema.ResourceData, m in
 	c.URL = fmt.Sprintf("https://api.github.com/repos/%v/%v/actions/workflows/%v", orgOwner, repo, workflowName)
 	c.Method = "GET"
 
-	err := c.GetGitWorkflows()
+	err := c.GetGitWorkflowByName()
 	if err != nil {
 		return diag.FromErr(err)
 	}

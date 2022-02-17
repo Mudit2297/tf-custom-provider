@@ -1,19 +1,20 @@
 package client
 
 import (
-	action "cpf/providers/data/github"
+	models "cpf/providers/data/github"
 	"io"
 	"net/http"
 )
 
 type Client struct {
-	HttpClient *http.Client
-	Method     string
-	URL        string
-	Body       io.Reader
-	Headers    *map[string]string
-	Req        *http.Request
-	Workflow   *action.Workflow
+	HttpClient   *http.Client
+	Method       string
+	URL          string
+	Body         io.Reader
+	Headers      *map[string]string
+	Req          *http.Request
+	Workflow     *models.Workflow
+	WorkflowRuns *models.WorkflowRuns
 }
 
 func (c *Client) NewRequest() (*http.Request, error) {
