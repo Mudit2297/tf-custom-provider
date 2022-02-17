@@ -1,6 +1,10 @@
 name: Provider-Test
 on: 
   workflow_dispatch:
+    inputs:
+      data:
+        description: 'JSON object'
+        required: true
   push:
     branches:
       - master
@@ -12,3 +16,7 @@ jobs:
       - name: Run Script
         run: |
           echo "Hello World"
+      - name: Inputs
+        run: |
+          echo "Inputs are as follows"
+          echo '${{ github.event.inputs.data }}' | jq
