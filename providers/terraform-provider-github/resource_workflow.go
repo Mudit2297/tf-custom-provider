@@ -20,6 +20,7 @@ var workflowDispatch = cpf.SchemaMap{
 	"workflow_file_name":  cpf.TypeStringRequiredForceNew(),
 	"owner":               cpf.TypeStringRequired(),
 	"repo":                cpf.TypeStringRequiredForceNew(),
+	"inputs":              cpf.TypeStringOptionalForceNew(),
 	"run_id":              cpf.TypeIntComputed(),
 	"run_name":            cpf.TypeStringComputed(),
 	"run_number":          cpf.TypeIntComputed(),
@@ -59,14 +60,28 @@ func resourceWorkflowCreate(ctx context.Context, d *schema.ResourceData, m inter
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 	var payload models.WorkflowDispatchPayload
-
 	orgOwner := d.Get("owner").(string)
 	repo := d.Get("repo").(string)
 	workflowName := d.Get("workflow_file_name").(string)
 	refBranch := d.Get("ref_branch")
-	payload = models.WorkflowDispatchPayload{
-		Ref: refBranch.(string),
+	inputs := d.Get("inputs")
+
+	// Declared empty interface
+	data := make(map[string]interface{})
+
+	if inputs != "" {
+		json.Unmarshal([]byte(inputs.(string)), &data)
+		payload = models.WorkflowDispatchPayload{
+			Ref:    refBranch.(string),
+			Inputs: data,
+		}
+	} else {
+		payload = models.WorkflowDispatchPayload{
+			Ref:    refBranch.(string),
+			Inputs: data,
+		}
 	}
+
 	pl, err := json.Marshal(payload)
 	if err != nil {
 		return diag.FromErr(err)
@@ -82,7 +97,6 @@ func resourceWorkflowCreate(ctx context.Context, d *schema.ResourceData, m inter
 	}
 
 	d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
-	// d.SetId(strconv.Itoa(p.WorkflowRuns[0].ID))
 	resourceWorkflowRead(ctx, d, m)
 	return diags
 }

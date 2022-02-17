@@ -16,7 +16,8 @@ type Workflow struct {
 }
 
 type WorkflowDispatchPayload struct {
-	Ref string `json:"ref"`
+	Ref    string      `json:"ref"`
+	Inputs interface{} `json:"inputs"`
 }
 
 type WorkflowRuns struct {

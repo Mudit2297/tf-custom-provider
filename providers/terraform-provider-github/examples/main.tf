@@ -29,11 +29,27 @@ provider "cpf" {
 #   value = data.cpf_git_workflow.this.path
 # }
 
+locals {
+  data = {
+    env = "dev"
+    test = 1
+    output = "data"
+    label = "key"
+    k1 = "v1"
+    k2 = "v2"
+  }
+  temp = jsonencode(local.data)
+  input = {
+    data = local.temp
+  }
+}
+
 resource "cpf_git_workflow_dispatch" "this" {
   owner = "Mudit2297"
   repo = "tf-custom-provider"
   workflow_file_name = "t3.yml"
   ref_branch = "master"
+  inputs = jsonencode(local.input)
 }
 
 output "run_id" {

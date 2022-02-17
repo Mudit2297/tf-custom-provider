@@ -60,6 +60,14 @@ func TypeStringOptional() *schema.Schema {
 	}
 }
 
+func TypeStringOptionalForceNew() *schema.Schema {
+	return &schema.Schema{
+		Type:     schema.TypeString,
+		Optional: true,
+		ForceNew: true,
+	}
+}
+
 func TypeBoolComputed() *schema.Schema {
 	return &schema.Schema{
 		Type:     schema.TypeBool,

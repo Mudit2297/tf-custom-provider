@@ -52,7 +52,7 @@ func (c *Client) CreateGitWorkflowDispatch() error {
 	if err != nil {
 		return fmt.Errorf("Error in executing request: %v", err)
 	}
-	time.Sleep(3 * time.Second)
+	time.Sleep(5 * time.Second)
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
@@ -60,10 +60,6 @@ func (c *Client) CreateGitWorkflowDispatch() error {
 		return fmt.Errorf("Error in reading response body: %v", err)
 	}
 	if res.StatusCode == http.StatusOK || res.StatusCode == http.StatusNoContent {
-		// err = json.Unmarshal(body, &c.Workflow)
-		// if err != nil {
-		// 	return fmt.Errorf("Error during do unmarshal: %v", err)
-		// }
 		return nil
 
 	} else {
@@ -98,12 +94,4 @@ func (c *Client) GetGitWorkflowRunsByName() error {
 	}
 
 	return nil
-
-	// var workflowRuns WorkflowRuns
-	// err = json.Unmarshal(getDispatchRes, &workflowRuns)
-	// if err != nil {
-	// 	fmt.Println("Error during do unmarshel:")
-	// 	return nil, err
-	// }
-	// return &workflowRuns, nil
 }
